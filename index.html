@@ -224,12 +224,12 @@
                 }
             }, 1000);
 
-            // Success Ridirect
-            setTimeout(() => {
-                if (success.length === formCtrl.length) {
-                    return window.location.href = "https://www.prothomalo.com/";
-                }
-            }, 2000);
+            // Ridirection
+            // setTimeout(() => {
+            //     if (success.length === formCtrl.length) {
+            //         return window.location.href = "https://www.prothomalo.com/";
+            //     }
+            // }, 2000);
         }
 
 
@@ -298,7 +298,6 @@
             } else {
                 success(confirmPass);
             }
-            // end of validate() -----
         }
 
 
@@ -310,7 +309,6 @@
             const small = formControl.querySelector('small');
             small.innerText = message;
             formControl.className = ('form-control error');
-            // input.focus();
 
             const errorClass = document.querySelectorAll('.error');
             const errorInput = document.querySelector('.error input');
@@ -334,7 +332,6 @@
             } else {
                 return true
             }
-            //    return /\W/.test(username.value); // Only for = a-zA-Z0-9
         }
 
         function emailTest() {
@@ -343,14 +340,6 @@
             } else {
                 return true
             }
-
-            // // Regax not working
-            // const regax = /^[A-Za-z0-9._]{2, 25}@[ A-Za-Z]{3,}.[A-Za-z.] {2,10}+$/
-            // if (regax.test(email.value)) {
-            //     return false
-            // } else {
-            //     return true
-            // }
         }
     </script>
 </body>
