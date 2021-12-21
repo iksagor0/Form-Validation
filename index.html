@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Times New Roman', Times, serif;
+        width: 100%;
+        height: 100vh;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
+            url('../img/bg-3.jpg') no-repeat center;
+        background-size: cover;
+    }
+
+    .container {
+        display: block;
+        background: #fff;
+        width: 100%;
+        max-width: 350px;
+        box-shadow: 0 2px 10px rgba(255, 255, 255, .7);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .header h1 {
+        font-family: sans-serif;
+        text-align: center;
+        background: tomato;
+        color: #fff;
+        padding: 10px 0;
+    }
+
+    form {
+        padding: 10px 40px;
+    }
+
+    .form-control {
+        width: 100%;
+        position: relative;
+        margin-bottom: 2px;
+    }
+
+    label {
+        display: block;
+    }
+
+    .form-control input {
+        border: 1.4px solid #c0c0c0;
+        width: 100%;
+        padding: 5px;
+        font-size: 15px;
+        border-radius: 3px;
+        outline: 0;
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+
+    input:focus {
+        border: 1.4px solid #555;
+        outline: 0;
+        box-shadow: 0 1px 5px rgba(255, 162, 162, 0.4);
+    }
+
+    .form-control i {
+        position: absolute;
+        right: 10px;
+        top: 38%;
+    }
+
+    .form-control i.fa-check-circle {
+        color: green;
+        visibility: hidden;
+    }
+
+    .form-control i.fa-exclamation-circle {
+        color: red;
+        visibility: hidden;
+    }
+
+    .form-control small {
+        color: red;
+        font-size: 14px;
+        visibility: hidden;
+
+    }
+
+    .form-control.error small {
+        visibility: visible;
+    }
+
+    .form-control.error i.fa-exclamation-circle {
+        visibility: visible;
+    }
+
+    .form-control.success i.fa-check-circle {
+        visibility: visible;
+    }
+
+    .form-control.success input {
+        border: 1.4px solid green;
+    }
+
+    .form-control.error input {
+        border: 1.4px solid red;
+    }
+
+    button {
+        display: block;
+        margin: auto;
+        padding: 5px 14px;
+        background: rgb(235, 65, 35);
+        border: 1.3px solid #000;
+        border-radius: 4px;
+        outline: 0;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    button:active {
+        transform: scale(0.9);
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Create Account</h1>
+        </div>
+
+        <form action="#" id="form">
+            <div class="form-control">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username" autocomplete="off">
+
+                <small>**error message!</small>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+
+            <div class="form-control">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" autocomplete="off">
+
+                <small>error message!</small>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+
+            <div class="form-control">
+                <label for="phone">Phone</label>
+                <input type="number" id="phone" placeholder="Enter your phone number" autocomplete="off">
+
+                <small>error message!</small>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+
+            <div class="form-control">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+
+                <small>error message!</small>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+
+            <div class="form-control">
+                <label for="confirm-pass">Confirm Password</label>
+                <input type="password" id="confirm-pass" placeholder="Enter your password again">
+
+                <small>error message!</small>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <button type="submit" id="submit">Submit</button>
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+    <script>
+        const form = document.getElementById('form');
+        const username = document.getElementById('username');
+        const email = document.getElementById('email');
+        const phone = document.getElementById('phone');
+        const password = document.getElementById('password');
+        const confirmPass = document.getElementById('confirm-pass');
+        const submit = document.getElementById('submit');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            validate();
+            successAlert()
+        })
+
+        function successAlert() {
+            // Success Alert
+            const success = document.querySelectorAll('.success');
+            const formCtrl = document.querySelectorAll('.form-control');
+
+            setTimeout(() => {
+                if (success.length === formCtrl.length) {
+                    return alert(`Thanks to be with us "${username.value}"`);
+                }
+            }, 1000);
+
+            // Success Ridirect
+            setTimeout(() => {
+                if (success.length === formCtrl.length) {
+                    return window.location.href = "https://www.prothomalo.com/";
+                }
+            }, 2000);
+        }
+
+
+
+
+        var validate = () => {
+            var usernameValue = username.value.trim();
+            var emailValue = email.value.trim();
+            var phoneValue = phone.value.trim();
+            var passwordValue = password.value.trim();
+            var confirmPassdValue = confirmPass.value.trim();
+
+
+            // ========= Username =========
+            if (usernameValue === "") {
+                error(username, "** username can't be empty!");
+            } else if (usernameValue.length < 4) {
+                error(username, "** username should be at least 4 character!");
+            } else if (usernameValue.length > 18) {
+                error(username, "** username should be less than 18 character!");
+            } else if (usernameTest()) {
+                error(username, "** (!$%@&*/<) are not allowed! ** use (.-_)");
+            } else {
+                success(username);
+            }
+
+
+            // ========= Email =========
+            if (emailValue === "") {
+                error(email, "** email can't be empty!");
+            } else if (emailValue.length > 40) {
+                error(email, "** email is not valid!");
+            } else if (emailTest()) {
+                error(email, "** Not a valid email -!$/#%}* not allowed!");
+            } else {
+                success(email);
+            }
+
+
+
+            // ========= Phone =========
+            if (phoneValue === "") {
+                error(phone, "** phone can't be empty!");
+            } else if (phoneValue.length !== 11) {
+                error(phone, "** Phone number should be 11 numbers!");
+            } else {
+                success(phone);
+            }
+
+
+
+            // ========= Password =========
+            if (passwordValue === "") {
+                error(password, "** password can't be empty!");
+            } else if (passwordValue.length < 6) {
+                error(password, "** password should be minimun 6 characters!");
+            } else {
+                success(password);
+            }
+
+            // ========= Confirm Password =========
+            if (confirmPassdValue === "") {
+                error(confirmPass, "** confirmed password can't be empty!");
+            } else if (confirmPassdValue !== passwordValue) {
+                error(confirmPass, "** confirmed password is not match!");
+            } else {
+                success(confirmPass);
+            }
+            // end of validate() -----
+        }
+
+
+
+
+        // ====== Function - error, success, usernameTest, emailTest =======
+        function error(input, message) {
+            const formControl = input.parentElement;
+            const small = formControl.querySelector('small');
+            small.innerText = message;
+            formControl.className = ('form-control error');
+            // input.focus();
+
+            const errorClass = document.querySelectorAll('.error');
+            const errorInput = document.querySelector('.error input');
+            if (errorClass[0]) {
+                errorInput.focus();
+                errorClass[0].nextSibling.classList.remove('error');
+            } else {
+                input.focus();
+            }
+        }
+
+        function success(input) {
+            const formControl = input.parentElement;
+            formControl.className = ('form-control success');
+        }
+
+
+        function usernameTest() {
+            if (/^[a-zA-Z0-9_.-]+$/.test(username.value)) {
+                return false
+            } else {
+                return true
+            }
+            //    return /\W/.test(username.value); // Only for = a-zA-Z0-9
+        }
+
+        function emailTest() {
+            if (/^[a-zA-Z0-9_.-@.]+$/.test(email.value)) {
+                return false
+            } else {
+                return true
+            }
+
+            // // Regax not working
+            // const regax = /^[A-Za-z0-9._]{2, 25}@[ A-Za-Z]{3,}.[A-Za-z.] {2,10}+$/
+            // if (regax.test(email.value)) {
+            //     return false
+            // } else {
+            //     return true
+            // }
+        }
+    </script>
+</body>
+
+</html>
